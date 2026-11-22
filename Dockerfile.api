@@ -1,0 +1,10 @@
+FROM ubuntu:24.04
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates libssl3t64 libstdc++6 zlib1g \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --gid 10001 bridge && useradd --uid 10001 --gid bridge bridge \
+    && install -d -o bridge -g bridge /var/lib/telegram-bot-api \
+    && install -o bridge -g bridge /dev/null /var/lib/telegram-bot-api/.keep
+COPY --chmod=755 --from=source telegram-bot-api /usr/local/bin/telegram-bot-api
+USER bridge
+WORKDIR /var/lib/telegram-bot-api
+ENTRYPOINT ["telegram-bot-api"]
