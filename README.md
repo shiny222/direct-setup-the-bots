@@ -1,0 +1,1 @@
+# direct-setup-the-bots
